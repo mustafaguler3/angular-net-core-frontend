@@ -11,10 +11,12 @@ import { BasketService } from '../basket/services/basket.service';
 export class CheckoutComponent implements OnInit{
 
   constructor(private fb: FormBuilder,
-              private accountService: AccountService){}
+              private accountService: AccountService,
+              private basketService: BasketService){}
 
   ngOnInit(): void {
       this.getAddressFormValues();
+      this.getDeliveryMethodValue();
   }
 
   checkoutForm = this.fb.group({
@@ -42,5 +44,10 @@ export class CheckoutComponent implements OnInit{
     })
   }
 
-  
+  getDeliveryMethodValue(){
+    const basket = this.basketService.getCurrentBasketValue();
+    if(basket && basket.deliveryMethodId){
+      this.checkoutForm.get('deliveryForm')?.get('deliveryMethod')?.patchValue(basket.deliveryMethodId.toString())
+    }
+  }
 }
