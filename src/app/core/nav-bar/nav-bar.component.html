@@ -1,0 +1,54 @@
+<header class="d-flex flex-row justify-content-between align-items-center p-3 px-4 mb-3 bg-white border-bottom fixed-top shadow-sm">
+    <img src="/assets/images/products/Just-Eat-Logo.png" class="logo" routerLink="/" style="max-height: 95px;" alt="">
+    <nav class="my-2 text-uppercase fs-4">
+      <a class="p-2 text-dark text-decoration-none" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      <a class="p-2 text-dark text-decoration-none" routerLink="/shop" routerLinkActive="active">Shop</a>
+      <a class="p-2 text-dark text-decoration-none" routerLink="/test-error" routerLinkActive="active">Errors</a>
+    </nav>
+
+    <div class="d-flex align-items-center">
+        <a class="position-relative" routerLink="/basket">
+            <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
+            <div class="cart-no" *ngIf="(basketService.basketSource$ | async) as basket">
+              {{ getCount(basket.items) }}
+            </div>
+        </a>
+        
+        <ng-container *ngIf="(accountService.userSource$ | async) === null">
+          <a routerLink="/account/login" class="btn btn-outline-primary me-2" href="#">Login</a>
+          <a routerLink="/account/register" class="btn btn-outline-primary me-3" href="#">Sign up</a>
+        </ng-container>
+
+        <ng-container *ngIf="accountService.userSource$ | async as user">
+            <div class="dropdown ms-3 me-5" style="cursor: pointer;" dropdown>
+              <a dropdownToggle class="dropdown-toggle">
+                <strong>Welcome {{user.displayName}}</strong>
+              </a>
+
+              <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                <li class="py-1">
+                  <a routerLink="/basket" class="dropdown-item">
+                    <i class="fa fa-shopping-cart me-3">View basket</i>
+                  </a>
+                </li>
+
+                <li class="py-1">
+                  <a routerLink="/orders" class="dropdown-item">
+                    <i class="fa fa-shopping-cart me-3">View orders</i>
+                  </a>
+                </li>
+
+                <div class="dropdown-divider"></div>
+
+                <li class="py-1">
+                  <a (click)="accountService.logout()" class="dropdown-item">
+                    <i class="fa fa-sign-out me-3"></i>Logout
+                  </a>
+                </li>
+              </ul>
+          </div>
+        </ng-container>
+    </div>
+
+   
+  </header>

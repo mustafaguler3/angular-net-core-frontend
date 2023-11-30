@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-3">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="text-center mb-4">
+                <h1 class="mb-3">Login</h1>
+            </div>
+
+            <app-text-input [type]="'text'" [formControl]="form.controls['email']" [label]="'Email Address'"></app-text-input>
+            <app-text-input [type]="'password'" [formControl]="form.controls['password']" [label]="'Password'"></app-text-input>
+
+            <div class="d-grid">
+                <button class="btn btn-lg btn-primary mt-3" [disabled]="form.invalid">Sign in</button>
+            </div>
+        </form>
+    </div>
+</div>
